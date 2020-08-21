@@ -1,0 +1,13 @@
+{
+    "name": "fourhundredfour/doctrine-lombok",
+    "description": "A Doctrine library to create getter/setter at runtime with annotations.",
+    "type": "library",
+    "license": "Apache",
+    "authors": [
+        {
+            "name": "Daniel Schischkin",
+            "email": "daniel@schischkin.info"
+        }
+    ],
+    "require": {}
+}
