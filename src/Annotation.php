@@ -2,8 +2,8 @@
 
 namespace Schischkin\DoctrineLombok;
 
-use Cassandra\Set;
 use Doctrine\Common\Annotations\Reader;
+use Schischkin\DoctrineLombok\Annotations\AccessorInterface;
 use Schischkin\DoctrineLombok\Annotations\Getter;
 use Schischkin\DoctrineLombok\Annotations\Setter;
 
@@ -11,34 +11,62 @@ class Annotation
 {
     private Reader $reader;
 
+    /**
+     * Annotation constructor.
+     * @param Reader $reader
+     */
     public function __construct(Reader $reader)
     {
         $this->reader = $reader;
     }
 
-    public function parseClassByClassName(string $className)
+    /**
+     * @param string $className
+     * @throws \ReflectionException
+     */
+    public function parseClassByClassName(string $className): void
     {
         $class = new \ReflectionClass($className);
-        // TODO: Refactor
-        if ($this->hasClassAnnotation($class, Getter::class)) {
-            /** @var Getter $getter */
-            $getter = $this->reader->getClassAnnotation($class, Getter::class);
-            $getter->addMagicMethod($class, $class->getProperties());
-        }
-        if ($this->hasClassAnnotation($class, Setter::class)) {
-            /** @var Setter $getter */
-            $setter = $this->reader->getClassAnnotation($class, Setter::class);
-            $setter->addMagicMethod($class, $class->getProperties());
+        $this->setMethodsByClassAnnotation($class, Getter::class);
+        $this->setMethodsByClassAnnotation($class, Setter::class);
+        $this->setMethodsByPropertyAnnotation($class, Getter::class);
+        $this->setMethodsByPropertyAnnotation($class, Setter::class);
+    }
+
+    /**
+     * @param object $class
+     * @throws \ReflectionException
+     */
+    public function parseClassByInstance(object $class): void
+    {
+        $this->parseClassByClassName(get_class($class));
+    }
+
+    /**
+     * @param \ReflectionClass $class
+     * @param string $annotation
+     */
+    private function setMethodsByClassAnnotation(\ReflectionClass $class, string $annotation): void
+    {
+        /** @var AccessorInterface|null $accessor */
+        $accessor = $this->reader->getClassAnnotation($class, $annotation);
+        if (!is_null($accessor)) {
+            $accessor->addMagicMethod($class, $class->getProperties());
         }
     }
 
-    public function parseClassByInstance(object $class)
+    /**
+     * @param \ReflectionClass $class
+     * @param string $annotation
+     */
+    private function setMethodsByPropertyAnnotation(\ReflectionClass $class, string $annotation): void
     {
-        // TODO
-    }
-
-    private function hasClassAnnotation(\ReflectionClass $class, string $annotationName): bool
-    {
-        return !is_null($this->reader->getClassAnnotation($class, $annotationName));
+        foreach ($class->getProperties() as $property) {
+            /** @var AccessorInterface|null $accessor */
+            $accessor = $this->reader->getPropertyAnnotation($property, $annotation);
+            if (!is_null($accessor)) {
+                $accessor->addMagicMethod($class, [$property]);
+            }
+        }
     }
 }
