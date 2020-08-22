@@ -16,6 +16,18 @@ class Setter implements AccessorInterface
      */
     public function addMagicMethod(\ReflectionClass $class, array $properties)
     {
-        // TODO: Implement addMagicMethod() method.
+        foreach ($properties as $property) {
+            $methodName = 'set' . ucfirst($property->getName());
+            if ($class->hasMethod($methodName)) {
+                continue;
+            }
+            runkit_method_add(
+                $class->getName(),
+                $methodName,
+                '$value',
+                '$this->' . $property->getName() . ' = $value;',
+                RUNKIT_ACC_PUBLIC
+            );
+        }
     }
 }

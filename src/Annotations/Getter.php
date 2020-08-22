@@ -16,6 +16,18 @@ class Getter implements AccessorInterface
      */
     public function addMagicMethod(\ReflectionClass $class, array $properties)
     {
-        // TODO: Implement addMagicMethod() method.
+        foreach ($properties as $property) {
+            $methodName = 'get' . ucfirst($property->getName());
+            if ($class->hasMethod($methodName)) {
+                continue;
+            }
+            runkit_method_add(
+                $class->getName(),
+                $methodName,
+                '',
+                'return $this->' . $property->getName() . ';',
+                RUNKIT_ACC_PUBLIC
+            );
+        }
     }
 }
