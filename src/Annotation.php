@@ -27,10 +27,10 @@ class Annotation
     public function parseClassByClassName(string $className): void
     {
         $class = new \ReflectionClass($className);
-        $this->setMethodsByClassAnnotation($class, Getter::class);
-        $this->setMethodsByClassAnnotation($class, Setter::class);
-        $this->setMethodsByPropertyAnnotation($class, Getter::class);
-        $this->setMethodsByPropertyAnnotation($class, Setter::class);
+        $this->addMethodsByClassAnnotation($class, Getter::class);
+        $this->addMethodsByClassAnnotation($class, Setter::class);
+        $this->addMethodsByPropertyAnnotation($class, Getter::class);
+        $this->addMethodsByPropertyAnnotation($class, Setter::class);
     }
 
     /**
@@ -46,7 +46,7 @@ class Annotation
      * @param \ReflectionClass $class
      * @param string $annotation
      */
-    private function setMethodsByClassAnnotation(\ReflectionClass $class, string $annotation): void
+    private function addMethodsByClassAnnotation(\ReflectionClass $class, string $annotation): void
     {
         /** @var AccessorInterface|null $accessor */
         $accessor = $this->reader->getClassAnnotation($class, $annotation);
@@ -59,7 +59,7 @@ class Annotation
      * @param \ReflectionClass $class
      * @param string $annotation
      */
-    private function setMethodsByPropertyAnnotation(\ReflectionClass $class, string $annotation): void
+    private function addMethodsByPropertyAnnotation(\ReflectionClass $class, string $annotation): void
     {
         foreach ($class->getProperties() as $property) {
             /** @var AccessorInterface|null $accessor */
