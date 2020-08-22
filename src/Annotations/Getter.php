@@ -21,12 +21,12 @@ class Getter implements AccessorInterface
             if ($class->hasMethod($methodName)) {
                 continue;
             }
-            runkit_method_add(
+            runkit7_method_add(
                 $class->getName(),
                 $methodName,
                 '',
                 'return $this->' . $property->getName() . ';',
-                RUNKIT_ACC_PUBLIC
+                RUNKIT7_ACC_PUBLIC
             );
         }
     }
