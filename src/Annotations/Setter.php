@@ -1,6 +1,6 @@
 <?php
 
-namespace Schischkin\Annotations;
+namespace Schischkin\DoctrineLombok\Annotations;
 
 use Doctrine\Common\Annotations\Annotation\Target;
 use Doctrine\Common\Annotations\Annotation;

@@ -28,7 +28,7 @@ class User {
 ```php
 // app.php
 ...
-$annotation = new Schischkin\Annotation();
+$annotation = new Schischkin\Annotation($reader);
 $classLoader = new Schischkin\ClassLoader();
 
 $classNames = $classLoader->loadClasses(__DIR__ . '/my_source');

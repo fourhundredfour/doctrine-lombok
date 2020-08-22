@@ -1,6 +1,6 @@
 <?php
 
-namespace Schischkin;
+namespace Schischkin\DoctrineLombok;
 
 class ClassLoader
 {
