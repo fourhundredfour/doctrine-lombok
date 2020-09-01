@@ -22,6 +22,7 @@ class AnnotationTest extends TestCase
 
     public function testParseClassByClassNameMethodShouldAddMagicMethods()
     {
+        $this->readerMock->method('')
         $this->instance->parseClassByClassName(SampleAnnotation::class);
         $testInstance = new SampleAnnotation();
         $testInstance->email = 'daniel@schischkin.info';
@@ -29,5 +30,4 @@ class AnnotationTest extends TestCase
         $this->assertEquals('daniel@schischkin.info', $testInstance->getEmail());
         $this->assertEquals('Daniel', $testInstance->getName());
     }
-
 }
