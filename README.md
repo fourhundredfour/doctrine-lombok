@@ -2,16 +2,22 @@
 A Doctrine library to create getter/setter at runtime with annotations.
 
 ## Index
+* [Requirements](#requirements)
+* [Usage](#usage)
 
-## Installation
+## Requirements
+* Doctrine
+* >=PHP 7.4
 
 ## Usage
 ```php
 // my_source/Entity/User.php
-namespace Schischkin\Entity;
+<?php
 
-use Schischkin\Annotations\Getter;
-use Schischkin\Annotations\Setter;
+namespace Schischkin\DoctrineLombok\Entity;
+
+use Schischkin\DoctrineLombok\Annotations\Getter;
+use Schischkin\DoctrineLombok\Annotations\Setter;
 
 /** @Getter */
 class User {
@@ -20,16 +26,14 @@ class User {
     private $password;
 }
 
-
-
 ```
 
 
 ```php
 // app.php
 ...
-$annotation = new Schischkin\Annotation($reader);
-$classLoader = new Schischkin\ClassLoader();
+$annotation = new Schischkin\DoctrineLombok\Annotation($reader);
+$classLoader = new Schischkin\DoctrineLombok\ClassLoader();
 
 $classNames = $classLoader->loadClasses(__DIR__ . '/my_source');
 foreach ($classNames as $className) {
