@@ -15,7 +15,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Schischkin\\": "src/"
+            "Schischkin\\DoctrineLombok\\": "src/",
+            "Schischkin\\DoctrineLombok\\Tests\\": "tests/"
         }
     },
     "require-dev": {

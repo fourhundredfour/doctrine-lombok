@@ -1,6 +1,6 @@
 <?php
 
-namespace Schischkin\Annotations;
+namespace Schischkin\DoctrineLombok\Annotations;
 
 use Doctrine\Common\Annotations\Annotation\Target;
 use Doctrine\Common\Annotations\Annotation;
@@ -21,12 +21,11 @@ class Setter implements AccessorInterface
             if ($class->hasMethod($methodName)) {
                 continue;
             }
-            runkit7_method_add(
+            \runkit7_method_add(
                 $class->getName(),
                 $methodName,
                 '$value',
-                '$this->' . $property->getName() . ' = $value;',
-                RUNKIT7_ACC_PUBLIC
+                '$this->' . $property->getName() . ' = $value;'
             );
         }
     }

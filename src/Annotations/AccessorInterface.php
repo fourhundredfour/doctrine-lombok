@@ -1,6 +1,6 @@
 <?php
 
-namespace Schischkin\Annotations;
+namespace Schischkin\DoctrineLombok\Annotations;
 
 interface AccessorInterface
 {
